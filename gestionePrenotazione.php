@@ -13,7 +13,7 @@
     <?php
       $nome = $_POST["nome"];
       $cognome = $_POST["cognome"];
-      $numero = $_POST["numero"];
+      $numero = $_POST["numeroTavolo"];
       $data = $_POST["data"];
       $orario = $_POST["orario"];
       $note = $_POST["note"];
@@ -25,28 +25,42 @@
       $nomiCamerieri = array("Mattia", "Giulio", "Luca", "Niccolo", "Alice");
       $cognomiCamerieri = array("Verdi", "Bianchi", "Gialli", "Rossi", "Azzurri");
 
+      
+
       $antipasto = 5;
       $primo = 6;
       $secondo = 7;
 
+      $dataCompleta = $data . $orario;
+
+      $timestamp = strtotime($dataCompleta);
+      
+      $ordine;
+
       $totale;
 
-      if (isset($antipasto)==true && isset($primo)==false && isset($secondo)==false){
+      if (isset($antipasto) && !isset($primo) && !isset($secondo)){
         echo "<h2>NON E' POSSIBILE ORDINARE SOLO L'ANTIPASTO</h2>";
-      }else  if (isset($antipasto)==false && isset($primo)==true && isset($secondo)==false){
+      }else  if (!isset($antipasto) && isset($primo) && !isset($secondo)){
         $totale = $primo;
-      }else  if (isset($antipasto)==false && isset($primo)==false && isset($secondo)==true){
+        $ordine = "primo";
+      }else  if (!isset($antipasto) && !isset($primo) && isset($secondo)){
         $totale = $secondo;
-      }else  if (isset($antipasto)==true && isset($primo)==true && isset($secondo)==false){
+        $ordine = "secondo";
+      }else  if (isset($antipasto) && isset($primo) && !isset($secondo)){
         $totale = $antipasto + $primo;
-      }else  if (isset($antipasto)==true && isset($primo)==false && isset($secondo)==true){
+        $ordine = "antipasto,primo";
+      }else  if (isset($antipasto) && !isset($primo) && isset($secondo)){
         $totale = $antipasto + $secondo;
-      }else  if (isset($antipasto)==false && isset($primo)==true && isset($secondo)==true){
+        $ordine = "antipasto,secondo";
+      }else  if (!isset($antipasto) && isset($primo) && isset($secondo)){
         $totale = $primo + $secondo;
         $totale = $totale - ($totale*0.1);
-      }else  if (isset($antipasto)==true && isset($primo)==true && isset($secondo)==true){
+        $ordine = "primo,secondo";
+      }else  if (isset($antipasto) && isset($primo) && isset($secondo)){
         $totale = $antipasto + $primo + $secondo ;
         $totale = $totale - ($totale*0.15);
+        $ordine = "antipasto,primo,secondo";
       }else{
         echo "<h2>ERRORE!! CONSUMAZIONE OBBLIGATORIA!</h2>";
       }
@@ -58,16 +72,17 @@
         $totale = $totale + 3;
       }
 
-      echo "<h2>Cameriere: " . $nomiCamerieri[rand(0,4)] . " " . $cognomiCamerieri[rand(0,4)] . "</h2>";
+      echo "
+      <h1>Cliente: " . $nome . " " . $cognome . "
+      <h2>Cameriere: " . $nomiCamerieri[rand(0,4)] . " " . $cognomiCamerieri[rand(0,4)] . "</h2>
+      <p>Data ed ora: " . date("d-m-Y H:i", $timestamp) . "</p>
+      <p>Numero tavolo: " . $numero . "</p>
+      <p>Note: " . $note . "</p>
+      <p>Ordine: " . $ordine . "</p>
+      <p>Parcheggio: " . $parcheggio . "</p>
+      <p>Totale: " . $totale . "euro";
 
-
-
-
-
-
-
-
-
+            
 
     ?>
 </body>
