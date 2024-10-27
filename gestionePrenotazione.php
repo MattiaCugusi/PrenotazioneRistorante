@@ -27,9 +27,9 @@
 
       
 
-      $antipasto = 5;
-      $primo = 6;
-      $secondo = 7;
+      $a = 5;
+      $p = 6;
+      $s = 7;
 
       $dataCompleta = $data . $orario;
 
@@ -42,23 +42,23 @@
       if (isset($antipasto) && !isset($primo) && !isset($secondo)){
         echo "<h2>NON E' POSSIBILE ORDINARE SOLO L'ANTIPASTO</h2>";
       }else  if (!isset($antipasto) && isset($primo) && !isset($secondo)){
-        $totale = $primo;
+        $totale = $p;
         $ordine = "primo";
       }else  if (!isset($antipasto) && !isset($primo) && isset($secondo)){
-        $totale = $secondo;
+        $totale = $s;
         $ordine = "secondo";
       }else  if (isset($antipasto) && isset($primo) && !isset($secondo)){
-        $totale = $antipasto + $primo;
+        $totale = $a + $p;
         $ordine = "antipasto,primo";
       }else  if (isset($antipasto) && !isset($primo) && isset($secondo)){
-        $totale = $antipasto + $secondo;
+        $totale = $a + $s;
         $ordine = "antipasto,secondo";
       }else  if (!isset($antipasto) && isset($primo) && isset($secondo)){
-        $totale = $primo + $secondo;
+        $totale = $p + $s;
         $totale = $totale - ($totale*0.1);
         $ordine = "primo,secondo";
-      }else  if (isset($antipasto) && isset($primo) && isset($secondo)){
-        $totale = $antipasto + $primo + $secondo ;
+      }else if (isset($antipasto) && isset($primo) && isset($secondo)){
+        $totale = $a + $p + $s;
         $totale = $totale - ($totale*0.15);
         $ordine = "antipasto,primo,secondo";
       }else{
@@ -80,7 +80,16 @@
       <p>Note: " . $note . "</p>
       <p>Ordine: " . $ordine . "</p>
       <p>Parcheggio: " . $parcheggio . "</p>
-      <p>Totale: " . $totale . "euro";
+      <br>
+      <p>Prezzi menu: </p>
+        <ul>
+          <li>Antipasto: " . $a . "</li>
+          <li>Primo: " . $p . "</li>
+          <li>Secondo: " . $s . "</li>
+          <li>Primo e secondo: 10% sconto</li>
+          <li>Menu completo: 15% sconto</li>
+      <p>Totale: " . $totale . " euro";
+
 
             
 
